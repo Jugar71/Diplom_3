@@ -1,6 +1,7 @@
 package tests;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import pages.ConstructorPage;
 
@@ -8,19 +9,21 @@ public class ConstructorTest extends BaseTest{
 
     @Test
     public void checkBuns() {
-        ConstructorPage bun = new ConstructorPage(driver);
-        Assert.assertEquals("Произошла ошибка при выходе из учётной записи", "Булки", bun.getBunHeader());
+        ConstructorPage obj = new ConstructorPage(driver);
+        obj.bunsAndSaucesPrecondition();
+        Assert.assertTrue("Произошла ошибка при переходе к разделу Булки", obj.areBunsDisplayed());
     }
 
     @Test
     public void checkSauces() {
-        ConstructorPage sauce = new ConstructorPage(driver);
-        Assert.assertEquals("Произошла ошибка при выходе из учётной записи", "Соусы", sauce.getSauceHeader());
+        ConstructorPage obj = new ConstructorPage(driver);
+        obj.bunsAndSaucesPrecondition();
+        Assert.assertTrue("Произошла ошибка при переходе к разделу Соусы", obj.areSaucesDisplayed());
     }
 
     @Test
     public void checkFillings() {
-        ConstructorPage filling = new ConstructorPage(driver);
-        Assert.assertEquals("Произошла ошибка при выходе из учётной записи", "Начинки", filling.getFillingHeader());
+        ConstructorPage obj = new ConstructorPage(driver);
+        Assert.assertTrue("Произошла ошибка при переходе к разделу Начинки", obj.areFillingDisplayed());
     }
 }

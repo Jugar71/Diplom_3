@@ -16,46 +16,41 @@ public class ConstructorPage {
     private By sauceButton = By.xpath("//span[contains(text(), 'Соусы')]");
     private By fillingButton = By.xpath("//span[contains(text(), 'Начинки')]");
 
-    private By bunHeader = By.xpath("//h2[1][contains(text(), 'Булки')]");
-    private By sauceHeader = By.xpath("//h2[2][contains(text(), 'Соусы')]");
-    private By fillingHeader = By.xpath("//h2[3][contains(text(), 'Начинки')]");
+    private By buns = By.xpath("//ul[1][@class='BurgerIngredients_ingredients__list__2A-mT']");
+    private By sauces = By.xpath("//ul[2][@class='BurgerIngredients_ingredients__list__2A-mT']");
+    private By fillings = By.xpath("//ul[3][@class='BurgerIngredients_ingredients__list__2A-mT']");
 
     public ConstructorPage(WebDriver driver){
         this.driver = driver;
     }
 
-    @Step("Переходим к разделу Начинки, а затем проверяем переход к Булкам")
-    public String getBunHeader() {
+    @Step("Переходим к Начинкам, чтобы уже оттуда проверять Булки и Соусы")
+    public void bunsAndSaucesPrecondition() {
         WebElement wait1 = new WebDriverWait(driver, Duration.ofSeconds(5))//Ждём
                 .until(ExpectedConditions.elementToBeClickable(fillingButton));
         driver.findElement(fillingButton).click();
-        WebElement wait2 = new WebDriverWait(driver, Duration.ofSeconds(5))//Ждём
-                .until(ExpectedConditions.visibilityOfElementLocated(fillingHeader));
-        driver.findElement(bunButton).click();
-        WebElement wait3 = new WebDriverWait(driver, Duration.ofSeconds(5))//Ждём
-                .until(ExpectedConditions.visibilityOfElementLocated(bunHeader));
-        return driver.findElement(bunHeader).getText();
     }
 
-    @Step("Переходим к разделу Начинки, а затем проверяем переход к Соусам")
-    public String getSauceHeader() {
-        WebElement wait1 = new WebDriverWait(driver, Duration.ofSeconds(5))//Ждём
-                .until(ExpectedConditions.elementToBeClickable(fillingButton));
-        driver.findElement(fillingButton).click();
-        WebElement wait2 = new WebDriverWait(driver, Duration.ofSeconds(5))//Ждём
-                .until(ExpectedConditions.visibilityOfElementLocated(fillingHeader));
+    @Step("Проверяем переход к Булкам")
+    public boolean areBunsDisplayed() {
+        driver.findElement(bunButton).click();
+        WebElement wait3 = new WebDriverWait(driver, Duration.ofSeconds(5))//Ждём
+                .until(ExpectedConditions.visibilityOfElementLocated(buns));
+        return driver.findElement(buns).isDisplayed();
+    }
+
+    @Step("Проверяем переход к Соусам")
+    public boolean areSaucesDisplayed() {
         driver.findElement(sauceButton).click();
         WebElement wait3 = new WebDriverWait(driver, Duration.ofSeconds(5))//Ждём
-                .until(ExpectedConditions.visibilityOfElementLocated(sauceHeader));
-        return driver.findElement(sauceHeader).getText();
+                .until(ExpectedConditions.visibilityOfElementLocated(sauces));
+        return driver.findElement(sauces).isDisplayed();
     }
     @Step("Проверяем переход к Начинкам")
-    public String getFillingHeader() {
-        WebElement wait1 = new WebDriverWait(driver, Duration.ofSeconds(5))//Ждём
-                .until(ExpectedConditions.elementToBeClickable(fillingButton));
+    public boolean areFillingDisplayed() {
         driver.findElement(fillingButton).click();
-        WebElement wait2 = new WebDriverWait(driver, Duration.ofSeconds(5))//Ждём
-                .until(ExpectedConditions.visibilityOfElementLocated(fillingHeader));
-        return driver.findElement(fillingHeader).getText();
+        WebElement wait3 = new WebDriverWait(driver, Duration.ofSeconds(5))//Ждём
+                .until(ExpectedConditions.visibilityOfElementLocated(fillings));
+        return driver.findElement(fillings).isDisplayed();
     }
 }
