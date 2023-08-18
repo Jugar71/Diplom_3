@@ -1,0 +1,16 @@
+tests\ProfileTest.class
+tests\ConstructorTest.class
+pages\LoginPage.class
+pages\ConstructorPage.class
+tests\BaseTest.class
+pages\RegisterPage.class
+apiMethods\LoginSerialization.class
+tests\LoginTest.class
+pages\ProfilePage.class
+pages\MainPage.class
+tests\MainPageTest.class
+tests\RegisterTest.class
+tests\LogOutTest.class
+pages\LogOutPage.class
+apiMethods\RegisterSerialization.class
+apiMethods\ApiMethods.class
