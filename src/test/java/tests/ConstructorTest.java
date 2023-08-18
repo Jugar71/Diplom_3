@@ -1,29 +1,26 @@
 package tests;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import pages.ConstructorPage;
 
 public class ConstructorTest extends BaseTest{
 
     @Test
-    public void checkBuns() {
+    public void checkBun() throws InterruptedException {
         ConstructorPage obj = new ConstructorPage(driver);
-        obj.bunsAndSaucesPrecondition();
-        Assert.assertTrue("Произошла ошибка при переходе к разделу Булки", obj.areBunsDisplayed());
+        Assert.assertTrue("Произошла ошибка при переходе к разделу Булки", obj.checkBun());
     }
 
     @Test
-    public void checkSauces() {
+    public void checkSauce() throws InterruptedException {
         ConstructorPage obj = new ConstructorPage(driver);
-        obj.bunsAndSaucesPrecondition();
-        Assert.assertTrue("Произошла ошибка при переходе к разделу Соусы", obj.areSaucesDisplayed());
+        Assert.assertTrue("Произошла ошибка при переходе к разделу Соусы", obj.checkSauce());
     }
 
     @Test
-    public void checkFillings() {
+    public void checkFilling() throws InterruptedException {
         ConstructorPage obj = new ConstructorPage(driver);
-        Assert.assertTrue("Произошла ошибка при переходе к разделу Начинки", obj.areFillingDisplayed());
+        Assert.assertTrue("Произошла ошибка при переходе к разделу Начинки", obj.checkFilling());
     }
 }

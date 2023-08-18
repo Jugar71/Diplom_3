@@ -2,6 +2,7 @@ package pages;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -16,41 +17,61 @@ public class ConstructorPage {
     private By sauceButton = By.xpath("//span[contains(text(), 'Соусы')]");
     private By fillingButton = By.xpath("//span[contains(text(), 'Начинки')]");
 
-    private By buns = By.xpath("//ul[1][@class='BurgerIngredients_ingredients__list__2A-mT']");
-    private By sauces = By.xpath("//ul[2][@class='BurgerIngredients_ingredients__list__2A-mT']");
-    private By fillings = By.xpath("//ul[3][@class='BurgerIngredients_ingredients__list__2A-mT']");
+    private By constructBurger = By.xpath("//h1[contains(text(), 'Соберите бургер')]");
+    private By bunHeader = By.xpath("//h2[1][contains(text(), 'Булки')]");
+    private By sauceHeader = By.xpath("//h2[2][contains(text(), 'Соусы')]");
+    private By fillingHeader = By.xpath("//h2[3][contains(text(), 'Начинки')]");
 
     public ConstructorPage(WebDriver driver){
         this.driver = driver;
     }
 
-    @Step("Переходим к Начинкам, чтобы уже оттуда проверять Булки и Соусы")
-    public void bunsAndSaucesPrecondition() {
+    @Step("Проверяем скролл до Булок")
+    public boolean checkBun() throws InterruptedException {
+        boolean isScrolled = false;
         WebElement wait1 = new WebDriverWait(driver, Duration.ofSeconds(5))//Ждём
                 .until(ExpectedConditions.elementToBeClickable(fillingButton));
         driver.findElement(fillingButton).click();
-    }
-
-    @Step("Проверяем переход к Булкам")
-    public boolean areBunsDisplayed() {
+        Thread.sleep(2000);
         driver.findElement(bunButton).click();
-        WebElement wait3 = new WebDriverWait(driver, Duration.ofSeconds(5))//Ждём
-                .until(ExpectedConditions.visibilityOfElementLocated(buns));
-        return driver.findElement(buns).isDisplayed();
+        Thread.sleep(2000);
+        Point burger = driver.findElement(constructBurger).getLocation();
+        Point bun = driver.findElement(bunHeader).getLocation();
+        if(bun.getY() - burger.getY() == 115) {
+            isScrolled = true;
+        }
+        return isScrolled;
     }
 
-    @Step("Проверяем переход к Соусам")
-    public boolean areSaucesDisplayed() {
-        driver.findElement(sauceButton).click();
-        WebElement wait3 = new WebDriverWait(driver, Duration.ofSeconds(5))//Ждём
-                .until(ExpectedConditions.visibilityOfElementLocated(sauces));
-        return driver.findElement(sauces).isDisplayed();
-    }
-    @Step("Проверяем переход к Начинкам")
-    public boolean areFillingDisplayed() {
+    @Step("Проверяем скролл до Соусов")
+    public boolean checkSauce() throws InterruptedException {
+        boolean isScrolled = false;
+        WebElement wait1 = new WebDriverWait(driver, Duration.ofSeconds(5))//Ждём
+                .until(ExpectedConditions.elementToBeClickable(fillingButton));
         driver.findElement(fillingButton).click();
-        WebElement wait3 = new WebDriverWait(driver, Duration.ofSeconds(5))//Ждём
-                .until(ExpectedConditions.visibilityOfElementLocated(fillings));
-        return driver.findElement(fillings).isDisplayed();
+        Thread.sleep(2000);
+        driver.findElement(sauceButton).click();
+        Thread.sleep(2000);
+        Point burger = driver.findElement(constructBurger).getLocation();
+        Point sauce = driver.findElement(sauceHeader).getLocation();
+        if(sauce.getY() - burger.getY() == 115) {
+            isScrolled = true;
+        }
+        return isScrolled;
+    }
+
+    @Step("Проверяем скролл до Начинок")
+    public boolean checkFilling() throws InterruptedException {
+        boolean isScrolled = false;
+        WebElement wait1 = new WebDriverWait(driver, Duration.ofSeconds(5))//Ждём
+                .until(ExpectedConditions.elementToBeClickable(fillingButton));
+        driver.findElement(fillingButton).click();
+        Thread.sleep(2000);
+        Point burger = driver.findElement(constructBurger).getLocation();
+        Point filling = driver.findElement(fillingHeader).getLocation();
+        if(filling.getY() - burger.getY() == 115) {
+            isScrolled = true;
+        }
+        return isScrolled;
     }
 }
